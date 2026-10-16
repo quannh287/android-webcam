@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  Runs `android-webcam watch` at login so plugging the phone in enables webcam mode.
+  Install:  edit the binary path below, then
+    cp contrib/macos/com.android-webcam.watch.plist ~/Library/LaunchAgents/
+    launchctl load ~/Library/LaunchAgents/com.android-webcam.watch.plist
+  Remove:   launchctl unload ~/Library/LaunchAgents/com.android-webcam.watch.plist
+-->
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.android-webcam.watch</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/usr/local/bin/android-webcam</string>
+    <string>watch</string>
+  </array>
+  <key>EnvironmentVariables</key>
+  <dict>
+    <!-- launchd's PATH lacks Homebrew, where adb usually lives. -->
+    <key>PATH</key>
+    <string>/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin</string>
+  </dict>
+  <key>RunAtLoad</key>
+  <true/>
+  <key>KeepAlive</key>
+  <true/>
+  <key>StandardOutPath</key>
+  <string>/tmp/android-webcam-watch.log</string>
+  <key>StandardErrorPath</key>
+  <string>/tmp/android-webcam-watch.log</string>
+</dict>
+</plist>
